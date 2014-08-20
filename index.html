@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>iAdvize PHP Style Guide by iadvize</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>iAdvize PHP Style Guide</h1>
+        <h2>PHP Style Guide</h2>
+        <a href="https://github.com/iadvize/php" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a name="iadvize-php-style-guide" class="anchor" href="#iadvize-php-style-guide"><span class="octicon octicon-link"></span></a>iAdvize PHP Style Guide</h1>
+
+<h2>
+<a name="table-of-contents" class="anchor" href="#table-of-contents"><span class="octicon octicon-link"></span></a><a name="TOC">Table of Contents</a>
+</h2>
+
+<ol>
+<li><a href="#files">Files</a></li>
+<li><a href="#lines">Lines</a></li>
+<li><a href="#keywords">Keywords</a></li>
+<li><a href="#comments">Comments</a></li>
+<li><a href="#variables">Variables</a></li>
+<li><a href="#type-casting">Type casting</a></li>
+<li><a href="#namespaces-use">Namespaces and use declarations</a></li>
+<li><a href="#strings">String</a></li>
+<li><a href="#arrays">Arrays</a></li>
+<li><a href="#classes">Classes, Properties, and Methods</a></li>
+<li><a href="#interfaces">Interfaces, Traits</a></li>
+<li><a href="#function-method-calls">Function and Method Calls</a></li>
+<li><a href="#control-structures">Control Structures</a></li>
+<li><a href="#closures">Closures</a></li>
+</ol><h2>
+<a name="files" class="anchor" href="#files"><span class="octicon octicon-link"></span></a><a name="files">Files</a>
+</h2>
+
+<ul>
+<li><p>Use only <code>UTF-8 without BOM</code>.</p></li>
+<li><p>Use only the Unix LF (linefeed) line ending.</p></li>
+<li><p>All PHP files must end with a single blank line.</p></li>
+<li><p>Use the long <code>&lt;?php ?&gt;</code> tags for non-views scripts.</p></li>
+</ul><div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">echo</span> <span class="s1">'test'</span><span class="p">;</span>
+</pre></div>
+
+<ul>
+<li>Use the short-echo <code>&lt;?= ?&gt;</code> tags for view scripts.</li>
+</ul><div class="highlight highlight-php"><pre><span class="o">&lt;</span><span class="nx">title</span><span class="o">&gt;&lt;?=</span><span class="nx">∙</span><span class="nv">$title</span><span class="p">;</span><span class="nx">∙</span><span class="cp">?&gt;</span><span class="x">&lt;/title&gt;</span>
+</pre></div>
+
+<ul>
+<li><p>The closing <code>?&gt;</code> tag must be omitted from files containing only PHP.</p></li>
+<li><p>Limit on line length limit must be <code>200 characters</code>.</p></li>
+<li><p>File must contain only one statement of namespace.</p></li>
+<li><p>Code must use <code>4 spaces</code> for indenting, not tabs.</p></li>
+</ul><h2>
+<a name="lines" class="anchor" href="#lines"><span class="octicon octicon-link"></span></a><a name="lines">Lines</a>
+</h2>
+
+<ul>
+<li>Blank lines may be added to improve readability and to indicate related blocks of code.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// nah</span>
+<span class="k">function</span> <span class="nf">foo</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$foo</span> <span class="o">=</span> <span class="s1">'test'</span><span class="p">;</span>
+    <span class="nv">$foo</span> <span class="o">=</span> <span class="nb">strtoupper</span><span class="p">(</span><span class="nv">$foo</span><span class="p">);</span>
+    <span class="k">return</span> <span class="nv">$foo</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// good</span>
+<span class="k">function</span> <span class="nf">bar</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$foo</span> <span class="o">=</span> <span class="s1">'test'</span><span class="p">;</span>
+    <span class="nv">$foo</span> <span class="o">=</span> <span class="nb">strtoupper</span><span class="p">(</span><span class="nv">$foo</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="nv">$foo</span><span class="p">;</span>
+<span class="p">}</span>
+
+</pre></div>
+
+<ul>
+<li>There must not be more than one statement per line.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="nb">substr</span><span class="p">(</span><span class="nb">strtoupper</span><span class="p">(</span><span class="s1">'test'</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+
+<span class="c1">// good</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="s1">'test'</span><span class="p">;</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="nb">strtoupper</span><span class="p">(</span><span class="nv">$foo</span><span class="p">);</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="nb">substr</span><span class="p">(</span><span class="nv">$foo</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</pre></div>
+
+<h2>
+<a name="keywords" class="anchor" href="#keywords"><span class="octicon octicon-link"></span></a><a name="keywords">Keywords</a>
+</h2>
+
+<ul>
+<li>All PHP keywords must be in lower case (Eg: <code>true</code>, <code>false</code>, <code>null</code>, etc.)</li>
+</ul><h2>
+<a name="namespaces-and-use-declarations" class="anchor" href="#namespaces-and-use-declarations"><span class="octicon octicon-link"></span></a><a name="namespaces-use">Namespaces and use declarations</a>
+</h2>
+
+<ul>
+<li>Namespaces names must be delcared in <code>UpperCamelCase</code>.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="k">namespace</span> <span class="nx">Vendor\fooBar</span><span class="p">;</span>
+
+<span class="c1">// bad</span>
+<span class="k">namespace</span> <span class="nx">Vendor\foo_bar</span><span class="p">;</span>
+
+<span class="c1">// good</span>
+<span class="k">namespace</span> <span class="nx">Vendor\FooBar</span><span class="p">;</span>
+</pre></div>
+
+<ul>
+<li><p>Namespaces declaration never begin by a backslash <code>Vendor\Space\Space</code>.</p></li>
+<li><p>There must be one blank line before and after the <code>namepsace</code> declaration.</p></li>
+<li><p>There must be one blank line after the block of <code>use</code> declaration.</p></li>
+<li><p><code>use</code> declaration must not separated by comma.</p></li>
+<li><p><code>use</code> block declarations must be grouped by package:</p></li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="k">use</span> <span class="nx">Foo\Bar</span><span class="p">,</span>
+    <span class="nx">Qux\Quux</span><span class="p">,</span>
+    <span class="nx">Foo\Baz</span><span class="p">;</span>
+
+<span class="c1">// bad</span>
+<span class="k">use</span> <span class="nx">Foo\Bar</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Qux\Quux</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Foo\Baz</span><span class="p">;</span>
+
+<span class="c1">// good</span>
+<span class="k">use</span> <span class="nx">Foo\Bar</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Foo\Baz</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Qux\Quux</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Qux\Corge\Grault</span><span class="p">;</span>
+</pre></div>
+
+<ul>
+<li>
+<code>use</code> alias declaration should be composed with sub-namespaces names.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="k">use</span> <span class="nx">Foo\Bar</span> <span class="k">as</span> <span class="nx">Baz</span><span class="p">;</span>
+
+<span class="c1">// bad</span>
+<span class="k">use</span> <span class="nx">Baz\Qux\Quux</span> <span class="k">as</span> <span class="nx">BQQ</span><span class="p">;</span>
+
+<span class="c1">// good</span>
+<span class="k">use</span> <span class="nx">Foo\Bar</span> <span class="k">as</span> <span class="nx">FooBar</span><span class="p">;</span>
+
+<span class="c1">// good</span>
+<span class="k">use</span> <span class="nx">Baz\Qux\Quux</span> <span class="k">as</span> <span class="nx">BazQuxQuux</span><span class="p">;</span>
+</pre></div>
+
+<h2>
+<a name="comments" class="anchor" href="#comments"><span class="octicon octicon-link"></span></a><a name="comments">Comments</a>
+</h2>
+
+<h3>
+<a name="in-line-code-comments" class="anchor" href="#in-line-code-comments"><span class="octicon octicon-link"></span></a>In-line code comments</h3>
+
+<ul>
+<li>Comments should be on a separate line immediately before the code line or block they reference.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="s1">'bar'</span><span class="p">;</span> <span class="c1">// Bar in foo</span>
+
+<span class="c1">// good</span>
+<span class="c1">// Foo assignment for example</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="s1">'bar'</span><span class="p">;</span>
+
+<span class="c1">// good</span>
+<span class="c1">// Foo assignment</span>
+<span class="c1">// for example</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="s1">'bar'</span><span class="p">;</span>
+</pre></div>
+
+<h3>
+<a name="block-code-comments" class="anchor" href="#block-code-comments"><span class="octicon octicon-link"></span></a>Block code comments</h3>
+
+<ul>
+<li>You must add PHPDoc blocks for all classes, methods, and functions, but you can omit the <code>@return</code> tag if the method does not return anything.</li>
+</ul><div class="highlight highlight-php"><pre><span class="sd">/**</span>
+<span class="sd"> * Foo</span>
+<span class="sd"> *</span>
+<span class="sd"> * @package Vendor\Bar\Baz</span>
+<span class="sd"> */</span>
+<span class="k">class</span> <span class="nc">Foo</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * The description of bar</span>
+<span class="sd">     *</span>
+<span class="sd">     * @param string $baz The baz</span>
+<span class="sd">     *</span>
+<span class="sd">     * @return string The return of bar</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">bar</span><span class="p">(</span><span class="nv">$baz</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Returned value</span>
+        <span class="k">return</span> <span class="s1">'Do something...'</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li>You must add PHPDoc blocks for all variable references.</li>
+</ul><pre><code>/** @var Bar\Baz $foo Baz object */
+$foo = $bar-&gt;baz();
+</code></pre>
+
+<div class="highlight highlight-php"><pre><span class="sd">/**</span>
+<span class="sd"> * Foo</span>
+<span class="sd"> *</span>
+<span class="sd"> * @package Vendor\Bar\Baz</span>
+<span class="sd"> */</span>
+<span class="k">class</span> <span class="nc">Foo</span>
+<span class="p">{</span>
+    <span class="sd">/** @var string $bar It's bar! */</span>
+    <span class="k">public</span> <span class="nv">$bar</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li>
+<code>@todo</code> and <code>@fixme</code> must be used in PHPDoc blocks like annotations.</li>
+</ul><div class="highlight highlight-php"><pre><span class="sd">/** @todo Think to check value */</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="s1">'bar'</span><span class="p">;</span>
+
+<span class="sd">/** @fixme Change qux to quux */</span>
+<span class="nv">$baz</span> <span class="o">=</span> <span class="s1">'qux'</span><span class="p">;</span>
+</pre></div>
+
+<h2>
+<a name="variables" class="anchor" href="#variables"><span class="octicon octicon-link"></span></a><a name="variables">Variables</a>
+</h2>
+
+<h3>
+<a name="user-variables" class="anchor" href="#user-variables"><span class="octicon octicon-link"></span></a>User variables</h3>
+
+<ul>
+<li>Variables should be in <code>lowerCamelCase</code>.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="nv">$_foo</span><span class="o">=</span><span class="s1">''</span><span class="p">;</span>
+
+<span class="c1">// bad</span>
+<span class="nv">$foo_bar</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+
+<span class="c1">// bad</span>
+<span class="nv">$fooBar</span><span class="o">=</span><span class="s1">''</span><span class="p">;</span>
+
+<span class="c1">// good</span>
+<span class="nv">$fooBar∙</span><span class="o">=</span><span class="nx">∙</span><span class="s1">''</span><span class="p">;</span>
+</pre></div>
+
+<ul>
+<li>You must set off operators with spaces.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="o">+</span><span class="mi">6</span><span class="p">)</span><span class="o">/</span><span class="mi">5</span><span class="p">;</span>
+
+<span class="c1">// good</span>
+<span class="nv">$foo∙</span><span class="o">=</span><span class="nx">∙</span><span class="p">(</span><span class="mi">5</span><span class="nx">∙</span><span class="o">+</span><span class="nx">∙6</span><span class="p">)</span><span class="nx">∙</span><span class="o">/</span><span class="nx">∙5</span><span class="p">;</span>
+</pre></div>
+
+<ul>
+<li>You must conserve a great alignment.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="s1">'Ba'</span><span class="p">;</span>
+<span class="nv">$foo</span> <span class="o">.=</span> <span class="s1">'r'</span><span class="p">;</span>
+<span class="nv">$quux</span> <span class="o">=</span> <span class="s1">'Qu'</span><span class="p">;</span>
+<span class="nv">$quux</span> <span class="o">.=</span> <span class="s1">'x'</span><span class="p">;</span>
+
+<span class="c1">// good</span>
+<span class="nv">$foo</span>   <span class="o">=</span> <span class="s1">'Ba'</span><span class="p">;</span>
+<span class="nv">$foo</span>  <span class="o">.=</span> <span class="s1">'r'</span><span class="p">;</span>
+<span class="nv">$quux</span>  <span class="o">=</span> <span class="s1">'Qu'</span><span class="p">;</span>
+<span class="nv">$quux</span> <span class="o">.=</span> <span class="s1">'x'</span><span class="p">;</span>
+</pre></div>
+
+<div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="nv">$fooBarBazQux</span><span class="o">-&gt;</span><span class="na">bar</span><span class="p">()</span><span class="o">-&gt;</span>
+    <span class="na">baz</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">qux</span><span class="p">();</span>
+
+<span class="c1">// good</span>
+<span class="nv">$fooBarBazQux</span>
+<span class="nx">∙∙∙∙</span><span class="o">-&gt;</span><span class="na">bar</span><span class="p">()</span>
+<span class="nx">∙∙∙∙</span><span class="o">-&gt;</span><span class="na">baz</span><span class="p">()</span>
+<span class="nx">∙∙∙∙</span><span class="o">-&gt;</span><span class="na">qux</span><span class="p">();</span>
+</pre></div>
+
+<h3>
+<a name="global-variables" class="anchor" href="#global-variables"><span class="octicon octicon-link"></span></a>Global variables</h3>
+
+<ul>
+<li>You must used <code>$_POST</code>, <code>$_GET</code> and <code>$_COOKIE</code> instead of <code>$_REQUEST</code>. If you use a framework, use <code>Request</code> component.</li>
+</ul><h2>
+<a name="strings" class="anchor" href="#strings"><span class="octicon octicon-link"></span></a><a name="strings">Strings</a>
+</h2>
+
+<ul>
+<li><p>A string must be enclosed in single quotes <code>'hello'</code>.</p></li>
+<li><p>A concatenated string must use single quotes <code>'foo' . $bar</code></p></li>
+<li><p>A concatenated string must use spaces around points <code>'foo' . $bar</code></p></li>
+<li><p>A string declaration in multiline must be aligned</p></li>
+</ul><div class="highlight highlight-php"><pre><span class="nv">$foo</span> <span class="o">=</span> <span class="s1">'Bar'</span>
+      <span class="o">.</span><span class="s1">'Baz'</span>
+      <span class="o">.</span><span class="s1">'Qux'</span><span class="p">;</span>
+</pre></div>
+
+<ul>
+<li>A string must not concatenate with functions or methods</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="nx">ucfisrt</span><span class="p">(</span><span class="s1">'bar'</span><span class="p">)</span> <span class="o">.</span> <span class="s1">' baz'</span><span class="p">;</span>
+
+<span class="c1">// good</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="nb">ucfirst</span><span class="p">(</span><span class="s1">'bar'</span><span class="p">);</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="nv">$foo</span> <span class="o">.</span> <span class="s1">' baz'</span><span class="p">;</span>
+
+<span class="c1">// very good</span>
+<span class="nv">$foo</span>  <span class="o">=</span> <span class="nb">ucfirst</span><span class="p">(</span><span class="s1">'bar'</span><span class="p">);</span>
+<span class="nv">$foo</span> <span class="o">.=</span> <span class="s1">' baz'</span><span class="p">;</span>
+</pre></div>
+
+<h2>
+<a name="type-casting" class="anchor" href="#type-casting"><span class="octicon octicon-link"></span></a><a name="type-casting">Type casting</a>
+</h2>
+
+<ul>
+<li><p>You must use <code>(int) $foo</code> instead of <code>intval($foo)</code>.</p></li>
+<li><p>You must use <code>(bool) $foo</code> instead of <code>boolval($foo)</code>.</p></li>
+<li><p>You must use <code>(float) $foo</code> instead of <code>floatval($foo)</code>.</p></li>
+<li><p>You must use <code>(string) $foo</code> instead of <code>strval($foo)</code>.</p></li>
+</ul><h2>
+<a name="arrays" class="anchor" href="#arrays"><span class="octicon octicon-link"></span></a><a name="arrays">Arrays</a>
+</h2>
+
+<ul>
+<li>Arrays with few data must be declared like this:</li>
+</ul><div class="highlight highlight-php"><pre><span class="nv">$foo∙</span><span class="o">=</span><span class="nx">∙</span><span class="p">[</span><span class="s1">'Bar'</span><span class="p">,</span><span class="nx">∙</span><span class="s1">'Baz'</span><span class="p">,</span><span class="nx">∙</span><span class="s1">'Qux'</span><span class="p">];</span>
+</pre></div>
+
+<ul>
+<li>Arrays with lots of data must be declared like this:</li>
+</ul><div class="highlight highlight-php"><pre><span class="nv">$foo</span> <span class="o">=</span> <span class="p">[</span>
+<span class="nx">∙∙∙∙</span><span class="s1">'bar'</span><span class="nx">∙∙</span><span class="o">=&gt;</span><span class="nx">∙</span><span class="s1">'abc'</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="s1">'baz'</span><span class="nx">∙∙</span><span class="o">=&gt;</span><span class="nx">∙123</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="s1">'qux'</span><span class="nx">∙∙</span><span class="o">=&gt;</span><span class="nx">∙true</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="s1">'quux'</span><span class="nx">∙</span><span class="o">=&gt;</span><span class="nx">∙</span><span class="p">[</span>
+<span class="nx">∙∙∙∙∙∙∙∙</span><span class="s1">'corge'</span><span class="nx">∙∙</span><span class="o">=&gt;</span><span class="nx">∙</span><span class="p">[],</span>
+<span class="nx">∙∙∙∙∙∙∙∙</span><span class="s1">'grault'</span><span class="nx">∙</span><span class="o">=&gt;</span><span class="nx">∙123</span><span class="o">.</span><span class="mi">456</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="p">],</span>
+<span class="p">];</span>
+</pre></div>
+
+<ul>
+<li>For the arrays with lots of data, lines must be terminated by a comma. (Easy to copy/paste)</li>
+</ul><h2>
+<a name="classes-properties-and-methods" class="anchor" href="#classes-properties-and-methods"><span class="octicon octicon-link"></span></a><a name="classes">Classes, Properties, and Methods</a>
+</h2>
+
+<h3>
+<a name="classes" class="anchor" href="#classes"><span class="octicon octicon-link"></span></a>Classes</h3>
+
+<ul>
+<li><p>The <code>extends</code> and <code>implements</code> keywords should be declared on the same line as the class name.</p></li>
+<li><p>The opening brace for the class must go on its own line; the closing brace for the class must go on the next line after the body.</p></li>
+</ul><div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Vendor\Foo</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Foo</span> <span class="k">extends</span> <span class="nx">Bar</span> <span class="k">implements</span> <span class="nx">Baz</span><span class="p">,</span> <span class="nx">Qux</span><span class="p">,</span> <span class="nx">Quux</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li>Lists of implements may be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list MUST be on the next line, and there MUST be only one interface per line.</li>
+</ul><div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Vendor\Foo</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Foo</span> <span class="k">extends</span> <span class="nx">Bar</span> <span class="k">implements</span>
+<span class="nx">∙∙∙∙Baz</span><span class="p">,</span>
+<span class="nx">∙∙∙∙Qux</span><span class="p">,</span>
+<span class="nx">∙∙∙∙Quux</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="properties" class="anchor" href="#properties"><span class="octicon octicon-link"></span></a>Properties</h3>
+
+<ul>
+<li>Visibility must be declared on all properties.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="sd">/** @var string $foo Property description */</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+
+<span class="c1">// good</span>
+<span class="sd">/** @var string $foo Property description */</span>
+<span class="k">public</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+</pre></div>
+
+<ul>
+<li>There must not be more than one property declared per statement.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="k">public</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="s1">''</span><span class="p">,</span>
+       <span class="nv">$bar</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+
+<span class="c1">// good</span>
+<span class="sd">/** @var string $foo Property description */</span>
+<span class="k">public</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+
+<span class="sd">/** @var string $bar Property description */</span>
+<span class="k">protected</span> <span class="nv">$bar</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+</pre></div>
+
+<ul>
+<li>Property names must not be prefixed with a single underscore to indicate <code>protected</code> or <code>private</code> visibility.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="sd">/** @var string $_bar Property description */</span>
+<span class="k">protected</span> <span class="nv">$_bar</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+
+<span class="sd">/** @var string $_baz Property description */</span>
+<span class="k">private</span> <span class="nv">$_baz</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+
+<span class="c1">// good</span>
+<span class="sd">/** @var string $bar Property description */</span>
+<span class="k">protected</span> <span class="nv">$bar</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+
+<span class="sd">/** @var string $baz Property description */</span>
+<span class="k">private</span> <span class="nv">$baz</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+</pre></div>
+
+<ul>
+<li>When present, the <code>static</code> declaration must come after the visibility declaration.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="sd">/** @var string $foo Property description */</span>
+<span class="k">static</span> <span class="k">public</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+
+<span class="c1">// good</span>
+<span class="sd">/** @var string $foo Property description */</span>
+<span class="k">public</span> <span class="k">static</span> <span class="nv">$foo</span> <span class="o">=</span> <span class="s1">''</span><span class="p">;</span>
+</pre></div>
+
+<h3>
+<a name="methods" class="anchor" href="#methods"><span class="octicon octicon-link"></span></a>Methods</h3>
+
+<ul>
+<li><p>Visibility must be declared on all methods. (Eg: <code>public|protected|private foo()</code>)</p></li>
+<li><p>Method names should not be prefixed with a single underscore to indicate protected or private visibility.</p></li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="k">protected</span> <span class="k">function</span> <span class="nf">_foo</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+
+<span class="c1">// good</span>
+<span class="k">protected</span> <span class="k">function</span> <span class="nf">foo</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li>Method names must not be declared with a space after the method name.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">foo∙</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+
+<span class="c1">// good</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">foo</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li>There must not be a space after the opening parenthesis, and there must not be a space before the closing parenthesis.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">foo</span><span class="p">()</span><span class="nx">∙</span><span class="p">{</span><span class="nx">∙</span>
+    <span class="c1">// Do something...</span>
+<span class="nx">∙</span><span class="p">}</span>
+
+<span class="c1">// good</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">foo</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li>The opening brace must go on its own line, and the closing brace must go on the next line following the body.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">foo</span><span class="p">()</span><span class="nx">∙</span><span class="p">{</span>
+    <span class="c1">// Do something...}</span>
+
+<span class="c1">// good</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">foo</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li>In the argument list, there must not be a space before each comma, and there must be one space after each comma.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">foo</span><span class="p">(</span><span class="nv">$bar∙</span><span class="p">,</span><span class="nx">∙</span><span class="o">&amp;</span><span class="nv">$baz∙</span><span class="p">,</span><span class="nx">∙</span><span class="nv">$qux</span> <span class="o">=</span> <span class="p">[])</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+
+<span class="c1">// bad</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">foo</span><span class="p">(</span><span class="nx">∙</span><span class="nv">$bar</span><span class="p">,</span> <span class="o">&amp;</span><span class="nv">$baz</span><span class="p">,</span> <span class="nv">$qux</span> <span class="o">=</span> <span class="p">[]</span><span class="nx">∙</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+
+<span class="c1">// good</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">foo</span><span class="p">(</span><span class="nv">$bar</span><span class="p">,</span><span class="nx">∙</span><span class="o">&amp;</span><span class="nv">$baz</span><span class="p">,</span><span class="nx">∙</span><span class="nv">$qux∙</span><span class="o">=</span><span class="nx">∙</span><span class="p">[])</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li><p>Argument lists may be split across multiple lines, where each subsequent line is indented once.</p></li>
+<li>
+<p>When doing so, the first item in the list must be on the next line, and there must be only one argument per line.</p>
+
+<ul>
+<li>When the argument list is split across multiple lines, the closing parenthesis and opening brace must be placed together on their own line with one space between them.</li>
+</ul>
+</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// good</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">foo</span><span class="p">(</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$bar</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="o">&amp;</span><span class="nv">$baz</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$qux</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+</pre></div>
+
+<ul>
+<li><p>When present, the <code>abstract</code> and <code>final</code> declarations must precede the visibility declaration.</p></li>
+<li><p>When present, the <code>static</code> declaration must come after the visibility declaration.</p></li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="k">protected</span> <span class="k">abstract</span> <span class="k">function</span> <span class="nf">foo</span><span class="p">();</span>
+
+<span class="k">static</span> <span class="k">public</span> <span class="k">final</span> <span class="k">function</span> <span class="nf">bar</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+
+<span class="c1">// good</span>
+<span class="k">abstract</span> <span class="k">protected</span> <span class="k">function</span> <span class="nf">foo</span><span class="p">();</span>
+
+<span class="k">final</span> <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">bar</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="interfaces-traits" class="anchor" href="#interfaces-traits"><span class="octicon octicon-link"></span></a><a name="interfaces">Interfaces, Traits</a>
+</h2>
+
+<h3>
+<a name="interfaces" class="anchor" href="#interfaces"><span class="octicon octicon-link"></span></a>Interfaces</h3>
+
+<ul>
+<li>The interface name must be suffixed with <code>Interface</code>.</li>
+</ul><div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Vendor\Foo</span><span class="p">;</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Interface Foo</span>
+<span class="sd"> *</span>
+<span class="sd"> * @package Vendor\Foo</span>
+<span class="sd"> */</span>
+<span class="k">interface</span> <span class="nx">FooInterface</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * Set Foo</span>
+<span class="sd">     *</span>
+<span class="sd">     * @param string $foo</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setFoo</span><span class="p">(</span><span class="nv">$foo</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="traits" class="anchor" href="#traits"><span class="octicon octicon-link"></span></a>Traits</h3>
+
+<ul>
+<li>The trait name must be suffixed with <code>Trait</code>.</li>
+</ul><div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
+
+<span class="k">namespace</span> <span class="nx">Vendor\Foo</span><span class="p">;</span>
+
+<span class="sd">/**</span>
+<span class="sd"> * Trait Foo</span>
+<span class="sd"> *</span>
+<span class="sd"> * @package Vendor\Foo</span>
+<span class="sd"> */</span>
+<span class="k">trait</span> <span class="nx">FooTrait</span>
+<span class="p">{</span>
+    <span class="sd">/** @var \Vendor\Bar */</span>
+    <span class="k">protected</span> <span class="nv">$bar</span><span class="p">;</span>
+
+    <span class="sd">/**</span>
+<span class="sd">     * Set Bar</span>
+<span class="sd">     *</span>
+<span class="sd">     * @param string $bar</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setBar</span><span class="p">(</span><span class="nv">$bar</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">bar</span> <span class="o">=</span> <span class="nv">$bar</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="function-and-method-calls" class="anchor" href="#function-and-method-calls"><span class="octicon octicon-link"></span></a><a name="function-method-calls">Function and Method Calls</a>
+</h2>
+
+<ul>
+<li>There must not be a space between the method or function name and the opening parenthesis.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="nx">foo∙</span><span class="p">();</span>
+<span class="nv">$bar</span><span class="o">-&gt;</span><span class="na">baz∙</span><span class="p">();</span>
+
+<span class="c1">// good</span>
+<span class="nx">foo</span><span class="p">();</span>
+<span class="nv">$bar</span><span class="o">-&gt;</span><span class="na">baz</span><span class="p">();</span>
+</pre></div>
+
+<ul>
+<li>There must not be a space after the opening parenthesis and there must not be a space before the closing parenthesis. In the argument list.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="nx">foo</span><span class="p">(</span><span class="nx">∙</span><span class="nv">$qux∙</span><span class="p">);</span>
+<span class="nv">$bar</span><span class="o">-&gt;</span><span class="na">baz</span><span class="p">(</span><span class="nx">∙</span><span class="nv">$qux∙</span><span class="p">);</span>
+
+<span class="c1">// good</span>
+<span class="nx">foo</span><span class="p">(</span><span class="nv">$qux</span><span class="p">);</span>
+<span class="nv">$bar</span><span class="o">-&gt;</span><span class="na">baz</span><span class="p">(</span><span class="nv">$qux</span><span class="p">);</span>
+</pre></div>
+
+<ul>
+<li>There must not be a space before each comma and there must be one space after each comma.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="nx">foo</span><span class="p">(</span><span class="nv">$bar∙</span><span class="p">,</span><span class="nx">∙</span><span class="nv">$baz∙</span><span class="p">,</span><span class="nx">∙</span><span class="nv">$qux</span><span class="p">);</span>
+
+<span class="c1">// good</span>
+<span class="nx">foo</span><span class="p">(</span><span class="nv">$bar</span><span class="p">,</span><span class="nx">∙</span><span class="nv">$baz</span><span class="p">,</span><span class="nx">∙</span><span class="nv">$qux</span><span class="p">);</span>
+</pre></div>
+
+<ul>
+<li>Argument lists may be split across multiple lines, where each subsequent line is indented once. When doing so, the first item in the list must be on the next line, and there must be only one argument per line.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="nx">foo</span><span class="p">(</span><span class="nv">$longFoo</span><span class="p">,</span>
+    <span class="nv">$longBar</span><span class="p">,</span>
+    <span class="nv">$longBaz</span>
+<span class="p">);</span>
+
+<span class="c1">// bad</span>
+<span class="nx">foo</span><span class="p">(</span><span class="nv">$longFoo</span><span class="p">,</span>
+    <span class="nv">$longBar</span><span class="p">,</span>
+    <span class="nv">$longBaz</span><span class="p">);</span>
+
+<span class="c1">// good</span>
+<span class="nx">foo</span><span class="p">(</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longFoo</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longBar</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longBaz</span>
+<span class="p">);</span>
+</pre></div>
+
+<ul>
+<li>Chained method calls must be wrapped before the first call and indented once.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="nv">$fooBar</span><span class="o">-&gt;</span><span class="na">baz</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">qux</span><span class="p">(</span><span class="nv">$param</span><span class="p">);</span>
+
+<span class="c1">// good</span>
+<span class="nv">$fooBar</span>
+    <span class="o">-&gt;</span><span class="na">baz</span><span class="p">()</span>
+    <span class="o">-&gt;</span><span class="na">qux</span><span class="p">(</span><span class="nv">$param</span><span class="p">);</span>
+</pre></div>
+
+<ul>
+<li>When you pass an array as the only argument, the array brackets should be on the same lines as the method parenthesis.</li>
+</ul><div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="nx">foo</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="s1">'foo'</span> <span class="o">=&gt;</span> <span class="s1">'bar'</span><span class="p">,</span>
+    <span class="p">]</span>
+<span class="p">);</span>
+
+<span class="c1">// good</span>
+<span class="nx">foo</span><span class="p">([</span>
+    <span class="s1">'foo'</span> <span class="o">=&gt;</span> <span class="s1">'bar'</span><span class="p">,</span>
+<span class="p">]);</span>
+</pre></div>
+
+<h2>
+<a name="control-structures" class="anchor" href="#control-structures"><span class="octicon octicon-link"></span></a><a name="control-structures">Control structures</a>
+</h2>
+
+<h3>
+<a name="general" class="anchor" href="#general"><span class="octicon octicon-link"></span></a>General</h3>
+
+<ul>
+<li><p>There must be one space after the control structure keyword</p></li>
+<li><p>There must not be a space after the opening parenthesis</p></li>
+<li><p>There must not be a space before the closing parenthesis</p></li>
+<li><p>There must be one space between the closing parenthesis and the opening brace</p></li>
+<li><p>The structure body must be indented once</p></li>
+<li><p>The closing brace must be on the next line after the body</p></li>
+<li><p>The body of each structure must be enclosed by braces. This standardizes how the structures look, and reduces the likelihood of introducing errors as new lines get added to the body.</p></li>
+</ul><h3>
+<a name="if-elseif-else" class="anchor" href="#if-elseif-else"><span class="octicon octicon-link"></span></a>
+<code>if</code>, <code>elseif</code>, <code>else</code>
+</h3>
+
+<ul>
+<li>The keyword <code>elseif</code> should be used instead of <code>else if</code> so that all control keywords look like single words.</li>
+</ul><h4>
+<a name="example" class="anchor" href="#example"><span class="octicon octicon-link"></span></a>Example</h4>
+
+<div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="k">if</span><span class="p">(</span><span class="nx">EXPRESSION</span><span class="p">){</span>
+   <span class="c1">// Do something...</span>
+<span class="p">}</span>
+
+<span class="c1">// bad</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">EXPRESSION</span><span class="p">)</span> <span class="p">{</span>
+<span class="c1">// Do something...</span>
+<span class="p">}</span>
+
+<span class="c1">// bad</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">EXPRESSION</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+
+<span class="c1">// bad</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">EXPRESSION</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+
+<span class="c1">// good</span>
+<span class="k">if</span><span class="nx">∙</span><span class="p">(</span><span class="nx">EXPRESSION</span><span class="p">)</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">}</span><span class="nx">∙elseif∙</span><span class="p">(</span><span class="nx">OTHER_EXPRESSION</span><span class="p">)</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">}</span><span class="nx">∙else∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="ternary-" class="anchor" href="#ternary-"><span class="octicon octicon-link"></span></a>Ternary (<code>?:</code>)</h3>
+
+<ul>
+<li>You should not use nesting ternary.</li>
+</ul><h4>
+<a name="example-1" class="anchor" href="#example-1"><span class="octicon octicon-link"></span></a>Example</h4>
+
+<div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="nx">EXPRESSION</span> <span class="o">?</span> <span class="s1">'bar'</span> <span class="o">:</span> <span class="nx">OTHER_EXPRESSION</span> <span class="o">?</span> <span class="s1">'baz'</span> <span class="o">:</span> <span class="s1">'qux'</span><span class="p">;</span>
+
+<span class="c1">// good</span>
+<span class="nv">$foo∙</span><span class="o">=</span><span class="nx">∙EXPRESSION∙</span><span class="o">?</span><span class="nx">∙</span><span class="s1">'bar'</span><span class="nx">∙</span><span class="o">:</span><span class="nx">∙</span><span class="s1">'baz'</span><span class="p">;</span>
+
+<span class="c1">// good</span>
+<span class="nv">$foo∙</span><span class="o">=</span><span class="nx">∙EXPRESSION</span>
+<span class="nx">∙∙∙∙</span><span class="o">?</span><span class="nx">∙</span><span class="s1">'bar'</span>
+<span class="nx">∙∙∙∙</span><span class="o">:</span><span class="nx">∙</span><span class="s1">'baz'</span><span class="p">;</span>
+</pre></div>
+
+<h3>
+<a name="switch-and-case" class="anchor" href="#switch-and-case"><span class="octicon octicon-link"></span></a>
+<code>switch</code> and <code>case</code>
+</h3>
+
+<ul>
+<li><p>The <code>case</code> statement must be indented once from <code>switch</code>, and the <code>break</code> keyword (or other terminating keyword) must be indented at the same level as the <code>case</code> body.</p></li>
+<li><p>There must be a comment such as <code>// no break</code> when fall-through is intentional in a non-empty case body.</p></li>
+</ul><h4>
+<a name="example-2" class="anchor" href="#example-2"><span class="octicon octicon-link"></span></a>Example</h4>
+
+<div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="k">switch</span><span class="p">(</span><span class="nx">EXPRESSION</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
+        <span class="c1">// Do something...</span>
+    <span class="k">break</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// good</span>
+<span class="k">switch</span><span class="nx">∙</span><span class="p">(</span><span class="nx">EXPRESSION</span><span class="p">)</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙case∙0</span><span class="o">:</span>
+<span class="nx">∙∙∙∙∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="nx">∙∙∙∙∙∙∙∙break</span><span class="p">;</span>
+<span class="nx">∙∙∙∙case∙1</span><span class="o">:</span>
+<span class="nx">∙∙∙∙∙∙∙∙</span><span class="c1">// Do something with no break...</span>
+<span class="nx">∙∙∙∙∙∙∙∙</span><span class="c1">// no break</span>
+<span class="nx">∙∙∙∙case∙2</span><span class="o">:</span>
+<span class="nx">∙∙∙∙case∙3</span><span class="o">:</span>
+<span class="nx">∙∙∙∙case∙4</span><span class="o">:</span>
+<span class="nx">∙∙∙∙∙∙∙∙</span><span class="c1">// Do something with return instead of break...</span>
+<span class="nx">∙∙∙∙∙∙∙∙return</span><span class="p">;</span>
+<span class="nx">∙∙∙∙default</span><span class="o">:</span>
+<span class="nx">∙∙∙∙∙∙∙∙</span><span class="c1">// Do something in default case...</span>
+<span class="nx">∙∙∙∙∙∙∙∙break</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="while-and-do-while" class="anchor" href="#while-and-do-while"><span class="octicon octicon-link"></span></a>
+<code>while</code> and <code>do while</code>
+</h3>
+
+<h4>
+<a name="example-3" class="anchor" href="#example-3"><span class="octicon octicon-link"></span></a>Example</h4>
+
+<div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="k">while</span><span class="p">(</span><span class="nx">EXPRESSION</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+
+<span class="c1">// bad</span>
+<span class="k">do</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span> <span class="k">while</span><span class="p">(</span><span class="nx">EXPRESSION</span><span class="p">);</span>
+
+<span class="c1">// good</span>
+<span class="k">while</span><span class="nx">∙</span><span class="p">(</span><span class="nx">EXPRESSION</span><span class="p">)</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">}</span>
+
+<span class="c1">// good</span>
+<span class="k">do</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">}</span><span class="nx">∙while∙</span><span class="p">(</span><span class="nx">EXPRESSION</span><span class="p">);</span>
+</pre></div>
+
+<h3>
+<a name="for" class="anchor" href="#for"><span class="octicon octicon-link"></span></a><code>for</code>
+</h3>
+
+<h4>
+<a name="example-4" class="anchor" href="#example-4"><span class="octicon octicon-link"></span></a>Example</h4>
+
+<div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="k">for</span><span class="p">(</span> <span class="nv">$i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nv">$i</span><span class="o">&lt;</span><span class="mi">10</span><span class="p">;</span><span class="nv">$i</span><span class="o">++</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+
+<span class="c1">// good</span>
+<span class="k">for</span><span class="nx">∙</span><span class="p">(</span><span class="nv">$i∙</span><span class="o">=</span><span class="nx">∙0</span><span class="p">;</span><span class="nx">∙</span><span class="nv">$i∙</span><span class="o">&lt;</span><span class="nx">∙10</span><span class="p">;</span><span class="nx">∙</span><span class="nv">$i</span><span class="o">++</span><span class="p">)</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="foreach" class="anchor" href="#foreach"><span class="octicon octicon-link"></span></a><code>foreach</code>
+</h3>
+
+<h4>
+<a name="example-5" class="anchor" href="#example-5"><span class="octicon octicon-link"></span></a>Example</h4>
+
+<div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="k">foreach</span><span class="p">(</span> <span class="nv">$foo</span> <span class="k">as</span> <span class="nv">$key</span><span class="o">=&gt;</span><span class="nv">$value</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+
+<span class="c1">// good</span>
+<span class="k">foreach</span><span class="nx">∙</span><span class="p">(</span><span class="nv">$foo∙as∙$key∙</span><span class="o">=&gt;</span><span class="nx">∙</span><span class="nv">$value</span><span class="p">)</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">}</span>
+</pre></div>
+
+<h3>
+<a name="try-and-catch" class="anchor" href="#try-and-catch"><span class="octicon octicon-link"></span></a>
+<code>try</code> and <code>catch</code>
+</h3>
+
+<h4>
+<a name="example-6" class="anchor" href="#example-6"><span class="octicon octicon-link"></span></a>Example</h4>
+
+<div class="highlight highlight-php"><pre><span class="c1">// bad</span>
+<span class="k">try</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+<span class="k">catch</span><span class="p">(</span><span class="nx">FooException</span> <span class="nv">$e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Do something...</span>
+<span class="p">}</span>
+
+<span class="c1">// good</span>
+<span class="k">try</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">}</span><span class="nx">∙catch∙</span><span class="p">(</span><span class="nx">FooException∙</span><span class="nv">$exception</span><span class="p">)</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">}</span><span class="nx">∙catch∙</span><span class="p">(</span><span class="nx">BarException∙</span><span class="nv">$exception</span><span class="p">)</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">}</span><span class="nx">∙finally∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">}</span>
+</pre></div>
+
+<h2>
+<a name="closures" class="anchor" href="#closures"><span class="octicon octicon-link"></span></a><a name="closures">Closures</a>
+</h2>
+
+<ul>
+<li><p>Closures must be declared with a space after the function keyword, and a space before and after the use keyword.</p></li>
+<li><p>The opening brace must go on the same line, and the closing brace MUST go on the next line following the body.</p></li>
+<li><p>There must not be a space after the opening parenthesis of the argument list or variable list, and there must not be a space before the closing parenthesis of the argument list or variable list.</p></li>
+<li><p>In the argument list and variable list, there must not be a space before each comma, and there must be one space after each comma.</p></li>
+<li><p>Closure arguments with default values must go at the end of the argument list.</p></li>
+<li><p>Argument lists and variable lists may be split across multiple lines, where each subsequent line is indented once.</p></li>
+<li><p>When doing so, the first item in the list must be on the next line, and there must be only one argument or variable per line.</p></li>
+<li><p>When the ending list (whether or arguments or variables) is split across multiple lines, the closing parenthesis and opening brace must be placed together on their own line with one space between them.</p></li>
+</ul><h3>
+<a name="example-declaration" class="anchor" href="#example-declaration"><span class="octicon octicon-link"></span></a>Example (declaration)</h3>
+
+<div class="highlight highlight-php"><pre><span class="c1">// good</span>
+<span class="nv">$closureWithArguments∙</span><span class="o">=</span><span class="nx">∙function∙</span><span class="p">(</span><span class="nv">$foo</span><span class="p">,</span><span class="nx">∙</span><span class="nv">$bar</span><span class="p">)</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">};</span>
+
+<span class="c1">// good</span>
+<span class="nv">$closureWithArgumentsAndVariables∙</span><span class="o">=</span><span class="nx">∙function∙</span><span class="p">(</span><span class="nv">$foo</span><span class="p">,</span><span class="nx">∙</span><span class="nv">$bar</span><span class="p">)</span><span class="nx">∙use∙</span><span class="p">(</span><span class="nv">$baz</span><span class="p">,</span><span class="nx">∙</span><span class="nv">$qux</span><span class="p">)</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">};</span>
+
+<span class="c1">// good</span>
+<span class="nv">$longArgumentsNoVariables∙</span><span class="o">=</span><span class="nx">∙function∙</span><span class="p">(</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longArgumentFoo</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longArgumentBar</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longArgumentBaz</span>
+<span class="p">)</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">};</span>
+
+<span class="c1">// good</span>
+<span class="nv">$noArgumentsLongVariables∙</span><span class="o">=</span><span class="nx">∙function∙</span><span class="p">()</span><span class="nx">∙use∙</span><span class="p">(</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longVariableFoo</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longVariablBar</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longVariableBaz</span>
+<span class="p">)</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">};</span>
+
+<span class="c1">// good</span>
+<span class="nv">$longArgumentsLongVariables∙</span><span class="o">=</span><span class="nx">∙function∙</span><span class="p">(</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longArgumentFoo</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longArgumentBar</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longArgumentBaz</span>
+<span class="p">)</span><span class="nx">∙use∙</span><span class="p">(</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longVariableFoo</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longVariableBar</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longVariableBaz</span>
+<span class="p">)</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">};</span>
+
+<span class="c1">// good</span>
+<span class="nv">$longArgumentsShortVariables∙</span><span class="o">=</span><span class="nx">∙function∙</span><span class="p">(</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longArgumentFoo</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longArgumentBar</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longArgumentBaz</span>
+<span class="p">)</span><span class="nx">∙use∙</span><span class="p">(</span><span class="nv">$variableFoo</span><span class="p">)</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">};</span>
+
+<span class="c1">// good</span>
+<span class="nv">$shortArgumentsLongVariables∙</span><span class="o">=</span><span class="nx">∙function∙</span><span class="p">(</span><span class="nv">$argumentFoo</span><span class="p">)</span><span class="nx">∙use∙</span><span class="p">(</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longVariableFoo</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longVariableBar</span><span class="p">,</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$longVariableBaz</span>
+<span class="p">)</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="p">};</span>
+</pre></div>
+
+<h3>
+<a name="example-usage" class="anchor" href="#example-usage"><span class="octicon octicon-link"></span></a>Example (usage)</h3>
+
+<div class="highlight highlight-php"><pre><span class="nv">$foo</span><span class="o">-&gt;</span><span class="na">bar</span><span class="p">(</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$argumentFoo</span><span class="p">,</span>
+<span class="nx">∙∙∙∙function∙</span><span class="p">(</span><span class="nv">$argumentBar</span><span class="p">)</span><span class="nx">∙use∙</span><span class="p">(</span><span class="nv">$variableFoo</span><span class="p">)</span><span class="nx">∙</span><span class="p">{</span>
+<span class="nx">∙∙∙∙∙∙∙∙</span><span class="c1">// Do something...</span>
+<span class="nx">∙∙∙∙</span><span class="p">},</span>
+<span class="nx">∙∙∙∙</span><span class="nv">$argumentBaz</span>
+<span class="p">);</span>
+</pre></div>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/iadvize/php/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/iadvize/php/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/iadvize/php"></a> is maintained by <a href="https://github.com/iadvize">iadvize</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
